@@ -12,6 +12,7 @@ public class Track implements Parcelable {
     private int mLikeCount;
     private String mSongURI;
     private int mDuration;
+    private boolean mDownloadable;
 
     public static class Builder {
         private Track mTrack;
@@ -206,7 +207,6 @@ public class Track implements Parcelable {
     public static Creator<Track> getCREATOR() {
         return CREATOR;
     }
-
     public static class TrackEntity {
         public static final String COLLECTION = "collection";
         public static final String ARTWORK_URL = "artwork_url";
@@ -222,5 +222,6 @@ public class Track implements Parcelable {
         public static final String AVATAR_URL = "avatar_url";
         public static final String LARGE_IMAGE_SIZE = "large";
         public static final String BETTER_IMAGE_SIZE = "original";
+        public static final String DOWNLOADABLE = "downloadable";
     }
 }

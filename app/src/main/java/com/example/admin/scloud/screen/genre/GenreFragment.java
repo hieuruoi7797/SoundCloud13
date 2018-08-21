@@ -11,35 +11,45 @@ import android.view.ViewGroup;
 
 import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.data.model.Genre;
-import com.example.admin.scloud.utils.ConstantString;
+import com.example.admin.scloud.data.repository.GenreRepository;
+import com.example.admin.scloud.data.source.local.GenresLocalDataSource;
+import com.example.admin.scloud.screen.genre.genre_detail.GenreDetailFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class GenreFragment extends Fragment implements GenreAdapter.OnItemClick {
+public class GenreFragment extends Fragment implements GenreContract.View,
+        GenreAdapter.OnGenreSelectedListener {
+    private Context mContext;
+    private GenreContract.Presenter mPresenter;
     private static final int AUDIO_POSITION = 0;
-    private static final int CLASSIC_POSITION = 1;
-    private static final int COUNTRY_POSITION = 2;
-    private static final int AMBIENT_POSITION = 3;
-    private static final int ALTERNATIVE_POSITION = 4;
     private static final int LARGER = 2;
     private static final int SMALLER = 1;
     private RecyclerView mRecyclerGenres;
-    private OnGenreSelectedListener mListener;
+    public GenreAdapter mGenreAdapter;
+
+    public GenreFragment() {
+    }
+
+    public GenreFragment newInstance() {
+        GenreFragment genreFragment = new GenreFragment();
+        return genreFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_genres, container, false);
+        View view = inflater.inflate(R.layout.fragment_genre, container, false);
+        mContext = getContext();
         mRecyclerGenres = view.findViewById(R.id.recycler_genres);
         setupUI(container);
+        mPresenter = new GenrePresenter(this,
+                GenreRepository.getInstance(new GenresLocalDataSource()));
+        mPresenter.loadGenres();
         return view;
     }
 
     private void setupUI(ViewGroup container) {
         GridLayoutManager mGridLayoutManager;
-        mRecyclerGenres.setHasFixedSize(true);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2,
                 GridLayoutManager.VERTICAL, false);
         mGridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -49,46 +59,25 @@ public class GenreFragment extends Fragment implements GenreAdapter.OnItemClick 
             }
         });
         mRecyclerGenres.setLayoutManager(mGridLayoutManager);
-
-        List<Genre> genreList = getGenreList();
-        GenreAdapter genreAdapter = new GenreAdapter(container.getContext(), genreList);
-        genreAdapter.setOnItemClick(this);
-        mRecyclerGenres.setAdapter(genreAdapter);
-    }
-
-    private List<Genre> getGenreList() {
-        List<Genre> mGenreList = new ArrayList<Genre>();
-        mGenreList.add(new Genre(ConstantString.AUDIO, R.drawable.audio_genre));
-        mGenreList.add(new Genre(ConstantString.CLASSIC, R.drawable.classic_genre));
-        mGenreList.add(new Genre(ConstantString.COUNTRY, R.drawable.country_genre));
-        mGenreList.add(new Genre(ConstantString.AMBIENT, R.drawable.ambient_genre));
-        mGenreList.add(new Genre(ConstantString.ALTERNATIVE, R.drawable.alternative_genre));
-        return mGenreList;
-    }
-
-    public interface OnGenreSelectedListener {
-        void onGenreSelected(Fragment fragment);
+        mGenreAdapter = new GenreAdapter(container.getContext(), null);
+        mRecyclerGenres.setAdapter(mGenreAdapter);
+        mGenreAdapter.setOnGenreClickListener(this);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (OnGenreSelectedListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() +
-                    "must implement OnGenreSelectedListener");
-        }
+    public void onGenreSelected(String genre) {
+        gotoDetailFragment(genre);
+    }
+    @Override
+    public void showGenres(List<Genre> genres) {
+        mGenreAdapter.setGenres(genres);
     }
 
-    @Override
-    public void clickItem(int position) {
-        switch (position) {
-            case AUDIO_POSITION:
-                mListener.onGenreSelected(new GenreDetailFragment());
-                break;
+    private void gotoDetailFragment(String genre) {
 
-        }
-
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_genre, GenreDetailFragment.newInstance(genre))
+                .addToBackStack(null)
+                .commit();
     }
 }

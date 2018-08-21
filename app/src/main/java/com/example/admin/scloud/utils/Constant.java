@@ -1,6 +1,7 @@
 package com.example.admin.scloud.utils;
 
 public class Constant {
+
     private Constant() {
     }
 
@@ -18,5 +19,4 @@ public class Constant {
 
     // Action
     public static final String ACTION_ADD_TRACK_TO_PLAYLIST = "ACTION_ADD_TRACK_TO_PLAYLIST";
-
 }

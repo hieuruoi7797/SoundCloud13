@@ -6,18 +6,21 @@ import com.example.admin.scloud.utils.StringUtil;
 
 public class TrackRemoteDataSource implements TrackDataSource.RemoteDataSource {
     private static TrackRemoteDataSource sTrackRemoteDataSource;
-    public static TrackRemoteDataSource getInstance(){
-        if (sTrackRemoteDataSource == null){
+
+    public static TrackRemoteDataSource getInstance() {
+        if (sTrackRemoteDataSource == null) {
             sTrackRemoteDataSource = new TrackRemoteDataSource();
         }
         return sTrackRemoteDataSource;
     }
+
     @Override
     public void getTracksRemote(
             String genre, int limit, int offSet, OnFetchDataListener<Track> listener) {
         new FetchGenresFromUrl(listener)
                 .execute(StringUtil.convertUrlFetchMusicGenre(genre, limit, offSet));
     }
+
     @Override
     public void searchTracksRemote(
             String trackName, int offSet, OnFetchDataListener<Track> listener) {
