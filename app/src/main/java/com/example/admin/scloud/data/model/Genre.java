@@ -1,30 +1,40 @@
 package com.example.admin.scloud.data.model;
 
 public class Genre {
-    private String mGenreName;
-    private int mImage;
+    private String mName;
+    private int mImagerResource;
+    private int mTitleResource;
 
-    public Genre(String genreName, int image) {
-        mGenreName = genreName;
-        mImage = image;
+    public Genre(String name, int titleResource, int imagerResource) {
+        mName = name;
+        mImagerResource = imagerResource;
+        mTitleResource = titleResource;
     }
 
     public Genre() {
     }
 
-    public void setGenreName(String genreName) {
-        mGenreName = genreName;
+    public int getTitleResource() {
+        return mTitleResource;
     }
 
-    public void setImage(int image) {
-        mImage = image;
+    public void setTitleResource(int titleResource) {
+        mTitleResource = titleResource;
     }
 
-    public String getGenreName() {
-        return mGenreName;
+    public void setName(String name) {
+        mName = name;
     }
 
-    public int getImage() {
-        return mImage;
+    public void setImagerResource(int imagerResource) {
+        mImagerResource = imagerResource;
+    }
+
+    public String getApiName() {
+        return mName;
+    }
+
+    public int getImagerResource() {
+        return mImagerResource;
     }
 }

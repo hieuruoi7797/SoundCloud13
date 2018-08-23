@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.data.model.Genre;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolders> {
     private List<Genre> mGenreList;
     private Context mContext;
-    private OnItemClick mOnItemClick;
+    private OnGenreSelectedListener mListener;
+    private LayoutInflater mInflater;
 
     public GenreAdapter(Context context, List<Genre> genreList) {
         this.mContext = context;
@@ -28,22 +30,20 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolders>
         return mContext;
     }
 
-    public void setOnItemClick(OnItemClick onItemClick) {
-        mOnItemClick = onItemClick;
-    }
-
     @NonNull
     @Override
     public ViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(
-                R.layout.item_genre, null);
-        return new ViewHolders(view, mOnItemClick);
+        if (mInflater == null) {
+            mInflater = LayoutInflater.from(viewGroup.getContext());
+        }
+        View view = mInflater.inflate(R.layout.item_genre, viewGroup, false);
+        return new ViewHolders(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolders sampleViewHolders, int i) {
-        sampleViewHolders.mGenreName.setText(mGenreList.get(i).getGenreName());
-        sampleViewHolders.mGenreImage.setImageResource(mGenreList.get(i).getImage());
+        final Genre genre = mGenreList.get(i);
+        sampleViewHolders.bindView(genre, mListener);
     }
 
     @Override
@@ -52,27 +52,40 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolders>
     }
 
 
-    static class ViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class ViewHolders extends RecyclerView.ViewHolder {
         private TextView mGenreName;
         private ImageView mGenreImage;
-        private OnItemClick mOnItemClick;
 
-        public ViewHolders(@NonNull View itemView, OnItemClick onItemClick) {
+        public ViewHolders(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             mGenreImage = itemView.findViewById(R.id.image_genre);
             mGenreName = itemView.findViewById(R.id.text_genre_name);
-            mOnItemClick = onItemClick;
         }
 
-
-        @Override
-        public void onClick(View view) {
-            mOnItemClick.clickItem(getAdapterPosition());
+        public void bindView(final Genre genre,
+                             final OnGenreSelectedListener listener) {
+            mGenreName.setText(genre.getName());
+            Glide.with(mGenreImage).load(genre.getGenreImage()).into(mGenreImage);
+            mGenreImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onGenreSelected(genre.getName());
+                }
+            });
         }
     }
 
-    interface OnItemClick {
-        void clickItem(int position);
+    public void setGenres(List<Genre> genres) {
+        this.mGenreList = genres;
+        notifyDataSetChanged();
     }
+
+    public void setOnGenreClickListener(OnGenreSelectedListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnGenreSelectedListener {
+        void onGenreSelected(String genre);
+    }
+
 }

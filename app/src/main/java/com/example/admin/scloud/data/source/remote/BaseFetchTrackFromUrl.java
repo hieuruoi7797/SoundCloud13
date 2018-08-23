@@ -99,27 +99,24 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
     protected Track parseJsonObjectToTrackObject(JSONObject jsonTrack) {
         Track track = new Track();
 
-        try {
-            JSONObject jsonUser = jsonTrack.getJSONObject(Track.TrackEntity.USER);
-            String artworkUrl = jsonTrack.getString(Track.TrackEntity.ARTWORK_URL);
-
-            // Null artwork is replaced by user's avatar
-            if (artworkUrl.equals(ConstantNetwork.NULL_RESULT)) {
-                artworkUrl = jsonTrack.getJSONObject(Track.TrackEntity.USER)
-                        .getString(Track.TrackEntity.AVATAR_URL);
-            }
-
-            track.setArtworkURL(parseArtworkUrlToBetter(artworkUrl));
-            track.setDownloadURL(jsonTrack.getString(Track.TrackEntity.DOWNLOAD_URL));
-            track.setDuration(jsonTrack.getInt(Track.TrackEntity.DURATION));
-            track.setId(jsonTrack.getInt(Track.TrackEntity.ID));
-            track.setTitle(jsonTrack.getString(Track.TrackEntity.TITLE));
-            track.setLikeCount(jsonTrack.getInt(Track.TrackEntity.LIKES_COUNT));
-            track.setArtist(jsonUser.getString(Track.TrackEntity.USERNAME));
-        } catch (JSONException e) {
-            return null;
+        JSONObject trackJSON = jsonTrack.optJSONObject(Track.TrackEntity.TRACK);
+        JSONObject jsonUser = jsonTrack.optJSONObject(Track.TrackEntity.USER);
+        String artworkUrl = jsonTrack.optString(Track.TrackEntity.ARTWORK_URL);
+        // Null artwork is replaced by user's avatar
+        if (artworkUrl.equals(ConstantNetwork.NULL_RESULT)) {
+            artworkUrl = jsonTrack.optJSONObject(Track.TrackEntity.USER)
+                    .optString(Track.TrackEntity.AVATAR_URL);
         }
 
+        track.setArtworkURL(artworkUrl);
+        track.setDownloadURL(trackJSON.optString(Track.TrackEntity.DOWNLOAD_URL));
+        track.setDuration(trackJSON.optInt(Track.TrackEntity.DURATION));
+        track.setId(trackJSON.optInt(Track.TrackEntity.ID));
+        track.setTitle(trackJSON.optString(Track.TrackEntity.TITLE));
+        track.setLikeCount(trackJSON.optInt(Track.TrackEntity.LIKES_COUNT));
+        if (jsonUser != null) {
+            track.setArtist(jsonUser.optString(Track.TrackEntity.USERNAME));
+        }
         return track;
     }
 }
