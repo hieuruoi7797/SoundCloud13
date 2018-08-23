@@ -18,13 +18,13 @@ import com.example.admin.scloud.screen.TrackListener;
 import java.util.ArrayList;
 import java.util.List;
 
-class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.GenreDetailViewHolder> {
+public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.GenreDetailViewHolder> {
     private TrackListener mTrackListener;
     private Context mContext;
     private List<Track> mTracks;
     private LayoutInflater mInflater;
 
-    public GenreDetailAdapter(TrackListener trackListener, Context context) {
+    public GenreDetailAdapter(Context context, TrackListener trackListener) {
         mTrackListener = trackListener;
         mContext = context;
         mInflater = LayoutInflater.from(context);

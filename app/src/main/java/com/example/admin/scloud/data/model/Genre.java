@@ -1,12 +1,13 @@
 package com.example.admin.scloud.data.model;
 
 public class Genre {
-    private String mName;
+
+    private String mApiName;
     private int mImagerResource;
     private int mTitleResource;
 
     public Genre(String name, int titleResource, int imagerResource) {
-        mName = name;
+        mApiName = name;
         mImagerResource = imagerResource;
         mTitleResource = titleResource;
     }
@@ -22,8 +23,8 @@ public class Genre {
         mTitleResource = titleResource;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public void setApiName(String name) {
+        mApiName = name;
     }
 
     public void setImagerResource(int imagerResource) {
@@ -31,7 +32,7 @@ public class Genre {
     }
 
     public String getApiName() {
-        return mName;
+        return mApiName;
     }
 
     public int getImagerResource() {

@@ -18,7 +18,6 @@ public interface GenreDetailContract {
         void showLoadingIndicator();
 
         void hideLoadingIndicator();
-        void updateTextNumberTrack();
     }
 
     interface Presenter extends BasePresenter {
