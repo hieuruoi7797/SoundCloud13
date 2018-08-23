@@ -9,8 +9,11 @@
     <string name="title_song_name">Song name</string>
     <string name="example">Example</string>
     <string name="title_artist_name">Artist</string>
+    <string name="title_like_count">Like</string>
     <string name="title_time">0.00</string>
     <string name="example_songname">Song Name</string>
     <string name="example_artist">Artist</string>
     <string name="example_like">Like</string>
+    <string name="msg_fetch_failed">Load track failed</string>
+    <string name="title_show_no_track">There\'s no song in your phone!</string>
 </resources>

@@ -52,7 +52,7 @@
             android:layout_marginEnd="@dimen/divider_marginStartEnd"
             android:layout_marginStart="@dimen/divider_marginStartEnd"
             android:layout_marginTop="@dimen/divider_marginTopBottom"
-            android:background="@color/color_white"
+            android:background="@color/color_primary_dark"
             app:layout_constraintEnd_toStartOf="@+id/button_main_change_state"
             app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintStart_toEndOf="@+id/text_song_name"
