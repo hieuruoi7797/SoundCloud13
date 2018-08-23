@@ -8,11 +8,10 @@ public interface TrackDataSource {
 
     //    local data
     interface LocalDataSource extends TrackDataSource {
-
+        void getTrackLocal(OnFetchDataListener<Track> listener);
     }
 
-//    remote data
-
+    //    remote data
     interface RemoteDataSource extends TrackDataSource {
         void getTracksRemote(String genre, int limit, int offSet,
                              OnFetchDataListener<Track> listener);
@@ -25,5 +24,4 @@ public interface TrackDataSource {
 
         void onFectDataFailure(String massage);
     }
-
 }

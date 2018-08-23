@@ -13,6 +13,57 @@ public class Track implements Parcelable {
     private String mSongURI;
     private int mDuration;
 
+    public static class Builder {
+        private Track mTrack;
+
+        public Builder() {
+            mTrack = new Track();
+        }
+
+        public Builder setId(int id) {
+            mTrack.setId(id);
+            return this;
+        }
+
+        public Builder setArtist(String artist) {
+            mTrack.setArtist(artist);
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            mTrack.setTitle(title);
+            return this;
+        }
+
+        public Builder setArtworkURL(String artworkURL) {
+            mTrack.setArtworkURL(artworkURL);
+            return this;
+        }
+
+        public Builder setDownloadURL(String downloadURL) {
+            mTrack.setDownloadURL(downloadURL);
+            return this;
+        }
+
+        public Builder setLikeCount(int likeCount) {
+            mTrack.setLikeCount(likeCount);
+            return this;
+        }
+
+        public Builder setSongURI(String songURI) {
+            mTrack.setSongURI(songURI);
+            return this;
+        }
+
+        public Builder setDuration(int duration) {
+            mTrack.setDuration(duration);
+            return this;
+        }
+
+        public Track build() {
+            return mTrack;
+        }
+    }
 
     protected Track(Parcel in) {
         mId = in.readInt();
@@ -23,6 +74,28 @@ public class Track implements Parcelable {
         mSongURI = in.readString();
         mDuration = in.readInt();
         mArtist.setName(in.readString());
+    }
+
+    public Track(int id, Artist artist, String title,
+                 String artworkURL, String songURI, int duration) {
+        mId = id;
+        mArtist = artist;
+        mTitle = title;
+        mArtworkURL = artworkURL;
+        mSongURI = songURI;
+        mDuration = duration;
+    }
+
+    public Track(int id, Artist artist, String title, String artworkURL,
+                 String downloadURL, int likeCount, String songURI, int duration) {
+        mId = id;
+        mArtist = artist;
+        mTitle = title;
+        mArtworkURL = artworkURL;
+        mDownloadURL = downloadURL;
+        mLikeCount = likeCount;
+        mSongURI = songURI;
+        mDuration = duration;
     }
 
     public static final Creator<Track> CREATOR = new Creator<Track>() {

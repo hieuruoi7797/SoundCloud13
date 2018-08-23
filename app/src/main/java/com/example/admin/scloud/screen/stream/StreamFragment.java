@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.admin.s_cloud.R;
 
 public class StreamFragment extends Fragment {
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <TextView
-            android:id="@+id/text_song_name"
+            android:id="@+id/text_local_song_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/playing_text_marginstart"
@@ -55,7 +55,7 @@
             android:background="@color/color_primary_dark"
             app:layout_constraintEnd_toStartOf="@+id/button_main_change_state"
             app:layout_constraintHorizontal_bias="0.886"
-            app:layout_constraintStart_toEndOf="@+id/text_song_name"
+            app:layout_constraintStart_toEndOf="@+id/text_local_song_name"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
