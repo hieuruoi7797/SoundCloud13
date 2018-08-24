@@ -17,7 +17,7 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
         if (sTrackRepository == null) {
             sTrackRepository = new TrackRepository(
                     TrackLocalDataSource.getInstance(context),
-                    TrackRemoteDataSource.getInstance());
+                    (RemoteDataSource) TrackRemoteDataSource.getInstance());
         }
         return sTrackRepository;
     }

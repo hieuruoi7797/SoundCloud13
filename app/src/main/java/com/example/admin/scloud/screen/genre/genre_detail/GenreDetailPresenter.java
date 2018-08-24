@@ -19,6 +19,7 @@ public class GenreDetailPresenter implements GenreDetailContract.Presenter,
     }
     @Override
     public void loadTrack(String genre, int limit, int offSet) {
+        mView.showLoadingIndicator();
         mTrackRepository.getTracksRemote(genre, limit, offSet, this);
     }
 

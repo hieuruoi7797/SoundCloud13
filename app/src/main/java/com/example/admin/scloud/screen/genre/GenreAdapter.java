@@ -64,12 +64,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolders>
 
         public void bindView(final Genre genre,
                              final OnGenreSelectedListener listener) {
-            mGenreName.setText(genre.getName());
-            Glide.with(mGenreImage).load(genre.getGenreImage()).into(mGenreImage);
+            mGenreName.setText(genre.getTitleResource());
+            Glide.with(mGenreImage).load(genre.getImagerResource()).into(mGenreImage);
             mGenreImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onGenreSelected(genre.getName());
+                    listener.onGenreSelected(genre.getApiName());
                 }
             });
         }

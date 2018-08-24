@@ -14,11 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.data.model.Track;
 import com.example.admin.scloud.data.repository.TrackRepository;
-import com.example.admin.scloud.data.source.remote.TrackRemoteDataSource;
 import com.example.admin.scloud.screen.TrackListener;
 import com.example.admin.scloud.utils.ConstantNetwork;
 
@@ -37,7 +37,7 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
     private GenreDetailAdapter mGenreDetailAdapter;
     private TrackListener mTrackListener;
     private List<Track> mTracks;
-    private ProgressBar mProgressLoadding;
+    private ProgressBar mProgressLoading;
     private String mGenre;
     private RecyclerView mTrackRecycler;
 
@@ -64,11 +64,10 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new GenreDetailPresenter(this,
-                TrackRepository.getInstance(TrackRemoteDataSource.getInstance()));
+                TrackRepository.getInstance(getContext()));
         mGenre = getArguments().getString(BUNDLE_GENRE_TYPE);
         setupComponents(view);
         mPresenter.loadTrack(mGenre, ConstantNetwork.LIMIT_DEFAULT, ConstantNetwork.OFFSET_DEFAULT);
-
     }
 
     @Override
@@ -92,7 +91,7 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public void showNoTracks() {
-
+        Toast.makeText(getContext(), R.string.message_no_track, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -102,17 +101,12 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public void showLoadingIndicator() {
-
+        mProgressLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoadingIndicator() {
-
-    }
-
-    @Override
-    public void updateTextNumberTrack() {
-
+        mProgressLoading.setVisibility(View.GONE);
     }
 
     @Override
@@ -122,8 +116,9 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
 
     public void setupComponents(View view) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mGenreDetailAdapter = new GenreDetailAdapter(mTrackListener, getContext());
+        mGenreDetailAdapter = new GenreDetailAdapter(getContext(), mTrackListener);
         mTrackRecycler = view.findViewById(R.id.recycler_genres_detail);
+        mProgressLoading = view.findViewById(R.id.progress_loading);
         mTrackRecycler.setLayoutManager(linearLayoutManager);
         mTrackRecycler.setHasFixedSize(true);
         mTrackRecycler.addItemDecoration(
@@ -131,4 +126,5 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
         );
         mTrackRecycler.setAdapter(mGenreDetailAdapter);
     }
+
 }

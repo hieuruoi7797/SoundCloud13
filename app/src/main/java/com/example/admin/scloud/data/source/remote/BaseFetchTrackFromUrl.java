@@ -100,15 +100,15 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
         Track track = new Track();
 
         JSONObject trackJSON = jsonTrack.optJSONObject(Track.TrackEntity.TRACK);
-        JSONObject jsonUser = jsonTrack.optJSONObject(Track.TrackEntity.USER);
-        String artworkUrl = jsonTrack.optString(Track.TrackEntity.ARTWORK_URL);
+        JSONObject jsonUser = trackJSON.optJSONObject(Track.TrackEntity.USER);
+        String artworkUrl = trackJSON.optString(Track.TrackEntity.ARTWORK_URL);
         // Null artwork is replaced by user's avatar
         if (artworkUrl.equals(ConstantNetwork.NULL_RESULT)) {
-            artworkUrl = jsonTrack.optJSONObject(Track.TrackEntity.USER)
+            artworkUrl = trackJSON.optJSONObject(Track.TrackEntity.USER)
                     .optString(Track.TrackEntity.AVATAR_URL);
         }
 
-        track.setArtworkURL(artworkUrl);
+        track.setArtworkURL(parseArtworkUrlToBetter(artworkUrl));
         track.setDownloadURL(trackJSON.optString(Track.TrackEntity.DOWNLOAD_URL));
         track.setDuration(trackJSON.optInt(Track.TrackEntity.DURATION));
         track.setId(trackJSON.optInt(Track.TrackEntity.ID));
