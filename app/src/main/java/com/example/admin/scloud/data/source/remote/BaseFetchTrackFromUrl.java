@@ -51,7 +51,6 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
             return;
         }
         mListener.onFectDataSuccess(tracks);
-
     }
 
     protected List<Track> getTracksFromJsonObject(JSONObject jsonObject) throws JSONException {
@@ -98,7 +97,6 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
 
     protected Track parseJsonObjectToTrackObject(JSONObject jsonTrack) {
         Track track = new Track();
-
         JSONObject trackJSON = jsonTrack.optJSONObject(Track.TrackEntity.TRACK);
         JSONObject jsonUser = trackJSON.optJSONObject(Track.TrackEntity.USER);
         String artworkUrl = trackJSON.optString(Track.TrackEntity.ARTWORK_URL);
@@ -107,16 +105,18 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
             artworkUrl = trackJSON.optJSONObject(Track.TrackEntity.USER)
                     .optString(Track.TrackEntity.AVATAR_URL);
         }
-
         track.setArtworkURL(parseArtworkUrlToBetter(artworkUrl));
         track.setDownloadURL(trackJSON.optString(Track.TrackEntity.DOWNLOAD_URL));
         track.setDuration(trackJSON.optInt(Track.TrackEntity.DURATION));
         track.setId(trackJSON.optInt(Track.TrackEntity.ID));
         track.setTitle(trackJSON.optString(Track.TrackEntity.TITLE));
         track.setLikeCount(trackJSON.optInt(Track.TrackEntity.LIKES_COUNT));
+
         if (jsonUser != null) {
             track.setArtist(jsonUser.optString(Track.TrackEntity.USERNAME));
         }
         return track;
     }
+
+
 }

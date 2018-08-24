@@ -17,13 +17,25 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
         if (sTrackRepository == null) {
             sTrackRepository = new TrackRepository(
                     TrackLocalDataSource.getInstance(context),
-                    (RemoteDataSource) TrackRemoteDataSource.getInstance());
+                    TrackRemoteDataSource.getInstance());
         }
         return sTrackRepository;
     }
+    public static TrackRepository getInstanceRemote() {
+        if (sTrackRepository == null) {
+            sTrackRepository = new TrackRepository(
+                    TrackRemoteDataSource.getInstance());
+        }
+       return sTrackRepository;
+    }
+
 
     private TrackRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
         mLocalDataSource = localDataSource;
+        mRemoteDataSource = remoteDataSource;
+    }
+
+    public TrackRepository(RemoteDataSource remoteDataSource) {
         mRemoteDataSource = remoteDataSource;
     }
 
@@ -34,12 +46,12 @@ public class TrackRepository implements TrackDataSource.RemoteDataSource,
         mRemoteDataSource.getTracksRemote(genre, limit, offSet, listener);
     }
 
+
     @Override
-    public void searchTracksRemote(String trackName,
+    public void searchTracksRemote(String trackName,int limit,
                                    int offSet, OnFetchDataListener<Track> listener) {
-        if (mRemoteDataSource != null) {
-            mRemoteDataSource.searchTracksRemote(trackName, offSet, listener);
-        }
+        if (mRemoteDataSource == null) return;
+            mRemoteDataSource.searchTracksRemote(trackName,limit, offSet, listener);
     }
 
     @Override

@@ -14,15 +14,15 @@ public class GenresLocalDataSource implements GenresDataSource {
         List<Genre> genres = new ArrayList<>();
         genres = new ArrayList<Genre>();
         genres.add(new Genre(GenreEntity.ALL_AUDIO,
-                R.string.all_audio, R.drawable.audio_genre));
+                R.string.all_audio, R.drawable.audio));
         genres.add(new Genre(GenreEntity.CLASSICAL,
-                R.string.classic, R.drawable.classic_genre));
+                R.string.classic, R.drawable.classic));
         genres.add(new Genre(GenreEntity.ALTERNATIVE,
-                R.string.alternative, R.drawable.alternative_genre));
+                R.string.alternative, R.drawable.alternative));
         genres.add(new Genre(GenreEntity.COUNTRY,
-                R.string.country, R.drawable.country_genre));
+                R.string.country, R.drawable.country));
         genres.add(new Genre(GenreEntity.AMBIENT,
-                R.string.ambient, R.drawable.ambient_genre));
+                R.string.ambient, R.drawable.ambient));
         return genres;
     }
 }
