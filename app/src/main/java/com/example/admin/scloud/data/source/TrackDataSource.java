@@ -16,12 +16,13 @@ public interface TrackDataSource {
         void getTracksRemote(String genre, int limit, int offSet,
                              OnFetchDataListener<Track> listener);
 
-        void searchTracksRemote(String trackName, int offSet, OnFetchDataListener<Track> listener);
+        void searchTracksRemote(String trackName,int limit, int offSet,
+                                OnFetchDataListener<Track> listener);
     }
 
     interface OnFetchDataListener<T> {
         void onFectDataSuccess(List<T> data);
 
-        void onFectDataFailure(String massage);
+        void onFectDataFailure(String messenger);
     }
 }

@@ -11,7 +11,5 @@ public interface TrackListener {
 
     void onAddToNextUp(Track track);
 
-    void onAddToPlaylist(Track track);
-
-    void onAddToFavorite(Track track);
+    void onDownloadTrack(Track track);
 }
