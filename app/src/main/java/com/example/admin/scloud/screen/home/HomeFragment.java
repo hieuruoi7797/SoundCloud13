@@ -62,4 +62,7 @@ public class HomeFragment extends Fragment{
         mTabLayout = view.findViewById(R.id.tab_option);
         mViewPager = view.findViewById(R.id.view_pager_option);
     }
+    public TabLayout getTabLayout() {
+        return mTabLayout;
+    }
 }

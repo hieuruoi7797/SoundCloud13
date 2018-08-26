@@ -19,14 +19,14 @@ public class StringUtil {
                 ConstantNetwork.CLIENT_ID, BuildConfig.API_KEY);
     }
 
-    public static String convertUrlDownloadTrack(String url, int offSet) {
+    public static String convertUrlDownloadTrack(String url) {
         return String.format("%s?%s=%s", url, ConstantNetwork.CLIENT_ID, BuildConfig.API_KEY);
     }
 
     @SuppressLint("DefaultLocale")
-    public static String convertUrlSearchTrack(String trackName, int offset) {
-        return String.format("%s%s%s&%s=%d&%s=%s", ConstantNetwork.BASE_URL,
-                ConstantNetwork.PARA_SEARCH_TRACK, trackName,
+    public static String convertUrlSearchTrack(String trackName, int limit, int offset) {
+        return String.format("%s%s%s&%s=%d&%s=%d&%s=%s", ConstantNetwork.BASE_URL,
+                ConstantNetwork.PARA_SEARCH_TRACK, trackName, ConstantNetwork.LIMIT, limit,
                 ConstantNetwork.PARA_OFFSET, offset, ConstantNetwork.CLIENT_ID,
                 BuildConfig.API_KEY);
     }

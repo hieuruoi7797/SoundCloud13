@@ -15,6 +15,7 @@ class SearchTrackFromUrl extends BaseFetchTrackFromUrl {
     public SearchTrackFromUrl(TrackDataSource.OnFetchDataListener<Track> listener) {
         super(listener);
     }
+
     protected List<Track> getTracksFromJsonObject(JSONObject jsonObject) throws JSONException {
         ArrayList<Track> trackArrayList = new ArrayList<>();
         JSONArray jsonCollection = jsonObject.getJSONArray(Track.TrackEntity.COLLECTION);
@@ -27,6 +28,7 @@ class SearchTrackFromUrl extends BaseFetchTrackFromUrl {
         }
         return trackArrayList;
     }
+
     protected Track parseJsonObjectToTrackObject(JSONObject jsonTrack) {
         Track track = new Track();
 
@@ -38,9 +40,11 @@ class SearchTrackFromUrl extends BaseFetchTrackFromUrl {
                     .optString(Track.TrackEntity.AVATAR_URL);
         }
         track.setArtworkURL(parseArtworkUrlToBetter(artworkUrl));
+        track.setSongURI(jsonTrack.optString(Track.TrackEntity.SONGURI));
         track.setDownloadURL(jsonTrack.optString(Track.TrackEntity.DOWNLOAD_URL));
         track.setDuration(jsonTrack.optInt(Track.TrackEntity.DURATION));
         track.setId(jsonTrack.optInt(Track.TrackEntity.ID));
+        track.setDownloadable(jsonTrack.optBoolean(Track.TrackEntity.DOWNLOADABLE));
         track.setTitle(jsonTrack.optString(Track.TrackEntity.TITLE));
         track.setLikeCount(jsonTrack.optInt(Track.TrackEntity.LIKES_COUNT));
         if (jsonUser != null) {

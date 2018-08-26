@@ -106,9 +106,11 @@ public abstract class BaseFetchTrackFromUrl extends AsyncTask<String, Void, List
                     .optString(Track.TrackEntity.AVATAR_URL);
         }
         track.setArtworkURL(parseArtworkUrlToBetter(artworkUrl));
+        track.setDownloadable(trackJSON.optBoolean(Track.TrackEntity.DOWNLOADABLE));
         track.setDownloadURL(trackJSON.optString(Track.TrackEntity.DOWNLOAD_URL));
         track.setDuration(trackJSON.optInt(Track.TrackEntity.DURATION));
         track.setId(trackJSON.optInt(Track.TrackEntity.ID));
+        track.setSongURI(trackJSON.optString(Track.TrackEntity.SONGURI));
         track.setTitle(trackJSON.optString(Track.TrackEntity.TITLE));
         track.setLikeCount(trackJSON.optInt(Track.TrackEntity.LIKES_COUNT));
 

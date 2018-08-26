@@ -73,7 +73,7 @@ public class StreamFragment extends android.support.v4.app.Fragment implements
         mTrackRecycler.setAdapter(mGenreDetailAdapter);
         mTrackRecycler.addOnScrollListener(new EndlessScrollListener(linearLayoutManager) {
             @Override
-            protected void onLoadMode(int offset) {
+            protected void onLoadMore(int offset) {
                 mPresenter.loadTrack(mGenre, ConstantNetwork.LIMIT_DEFAULT, offset);
             }
         });

@@ -57,6 +57,13 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
         notifyItemRangeInserted(startPosition, tracks.size());
     }
 
+    public void clearData() {
+        if (mTracks != null) {
+            mTracks.clear();
+        }
+        notifyDataSetChanged();
+    }
+
     static class GenreDetailViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
@@ -88,13 +95,12 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.button_download:
+                    mTrackListener.onDownloadTrack(mCurrentTrack);
                     //download
                     break;
                 default:
-                    //play
                     break;
             }
-
         }
 
         public void bindData(Track track) {

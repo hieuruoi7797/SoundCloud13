@@ -13,10 +13,11 @@ public class GenreDetailPresenter implements GenreDetailContract.Presenter,
     private TrackRepository mTrackRepository;
 
     public GenreDetailPresenter(GenreDetailContract.View view,
-                                TrackRepository trackRepository){
+                                TrackRepository trackRepository) {
         mView = view;
         mTrackRepository = trackRepository;
     }
+
     @Override
     public void loadTrack(String genre, int limit, int offSet) {
         mView.showLoadingIndicator();
@@ -34,9 +35,9 @@ public class GenreDetailPresenter implements GenreDetailContract.Presenter,
     }
 
     @Override
-    public void onFectDataFailure(String massage) {
+    public void onFectDataFailure(String messenger) {
         mView.hideLoadingIndicator();
-        mView.showLoadingTracksError(massage);
+        mView.showLoadingTracksError(messenger);
     }
 
     @Override

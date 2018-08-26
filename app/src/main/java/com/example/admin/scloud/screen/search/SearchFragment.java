@@ -27,10 +27,10 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     private SearchContract.Presenter mPresenter;
     private GenreDetailAdapter mAdapter;
-    private TrackListener mTrackListener;
     private RecyclerView mRecyclerSearch;
     private ProgressBar mProgressLoading;
     private String mQuery;
+    private TrackListener mTrackListener;
 
     public SearchFragment() {
     }
@@ -90,7 +90,6 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void showLoadingTrackError(String err) {
-
     }
 
     @Override

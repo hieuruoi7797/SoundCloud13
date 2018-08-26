@@ -21,9 +21,9 @@ import com.example.admin.scloud.data.model.Track;
 import com.example.admin.scloud.data.repository.TrackRepository;
 import com.example.admin.scloud.screen.TrackListener;
 import com.example.admin.scloud.utils.ConstantNetwork;
+import com.example.admin.scloud.utils.EndlessScrollListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,10 +36,8 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
     private GenreDetailContract.Presenter mPresenter;
     private GenreDetailAdapter mGenreDetailAdapter;
     private TrackListener mTrackListener;
-    private List<Track> mTracks;
     private ProgressBar mProgressLoading;
     private String mGenre;
-    private RecyclerView mTrackRecycler;
 
     @SuppressLint("ValidFragment")
     public GenreDetailFragment() {
@@ -117,14 +115,19 @@ public class GenreDetailFragment extends android.support.v4.app.Fragment impleme
     public void setupComponents(View view) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mGenreDetailAdapter = new GenreDetailAdapter(getContext(), mTrackListener);
-        mTrackRecycler = view.findViewById(R.id.recycler_genres_detail);
+        RecyclerView trackRecycler = view.findViewById(R.id.recycler_genres_detail);
         mProgressLoading = view.findViewById(R.id.progress_loading);
-        mTrackRecycler.setLayoutManager(linearLayoutManager);
-        mTrackRecycler.setHasFixedSize(true);
-        mTrackRecycler.addItemDecoration(
+        trackRecycler.setLayoutManager(linearLayoutManager);
+        trackRecycler.setHasFixedSize(true);
+        trackRecycler.addItemDecoration(
                 new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL)
         );
-        mTrackRecycler.setAdapter(mGenreDetailAdapter);
+        trackRecycler.setAdapter(mGenreDetailAdapter);
+        trackRecycler.addOnScrollListener(new EndlessScrollListener(linearLayoutManager) {
+            @Override
+            protected void onLoadMore(int offset) {
+                mPresenter.loadTrack(mGenre, ConstantNetwork.LIMIT_DEFAULT, offset);
+            }
+        });
     }
-
 }

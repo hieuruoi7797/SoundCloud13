@@ -20,4 +20,5 @@ public class ConstantNetwork {
     public static final String NULL_RESULT = "null";
     public static final String[] MUSIC_GENRES = {"all-music", "all-audio",
             "alternativerock", "ambient", "classical", "country"};
+    public static final String UNKNOWN = "<unknown>";
 }

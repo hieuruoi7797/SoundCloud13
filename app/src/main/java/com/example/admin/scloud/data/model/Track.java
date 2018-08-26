@@ -12,7 +12,7 @@ public class Track implements Parcelable {
     private int mLikeCount;
     private String mSongURI;
     private int mDuration;
-    private boolean mDownloadable;
+    private boolean mIsDownloadable;
 
     public static class Builder {
         private Track mTrack;
@@ -60,6 +60,12 @@ public class Track implements Parcelable {
             mTrack.setDuration(duration);
             return this;
         }
+
+        public Builder setDownloadable(boolean downloadable) {
+            mTrack.setDownloadable(downloadable);
+            return this;
+        }
+
 
         public Track build() {
             return mTrack;
@@ -152,6 +158,14 @@ public class Track implements Parcelable {
         mTitle = title;
     }
 
+    public boolean isDownloadable() {
+        return mIsDownloadable;
+    }
+
+    public void setDownloadable(boolean downloadable) {
+        mIsDownloadable = downloadable;
+    }
+
     public void setArtworkURL(String artworkURL) {
         mArtworkURL = artworkURL;
     }
@@ -207,6 +221,7 @@ public class Track implements Parcelable {
     public static Creator<Track> getCREATOR() {
         return CREATOR;
     }
+
     public static class TrackEntity {
         public static final String COLLECTION = "collection";
         public static final String ARTWORK_URL = "artwork_url";
