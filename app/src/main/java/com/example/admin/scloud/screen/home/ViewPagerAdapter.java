@@ -1,10 +1,13 @@
 package com.example.admin.scloud.screen.home;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
+import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.screen.genre.GenreFragment;
 import com.example.admin.scloud.screen.library.LibraryFragment;
 import com.example.admin.scloud.screen.stream.StreamFragment;
@@ -22,6 +25,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         String STREAM = "STREAM";
         String GENRE = "GENRE";
         String LIBRARY = "LIBRARY";
+
+        int STREAM1 = R.drawable.ic_harddisk;
     }
 
     public ViewPagerAdapter(FragmentManager fm) {
@@ -53,12 +58,22 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case TabType.STREAM_FRAGMENT:
-                return TabType.STREAM;
+                return "";
             case TabType.GENRE_FRAGMENT:
-                return TabType.GENRE;
+                return "";
             case TabType.LIBRARY_FRAGMENT:
-                return TabType.LIBRARY;
+                return "";
         }
         return getPageTitle(position);
     }
+    public void setupTabs(TabLayout tabLayout, ViewPager viewPager){
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(TabType.STREAM_FRAGMENT)
+                .setIcon(R.drawable.ic_lightning_electric_energy);
+        tabLayout.getTabAt(TabType.GENRE_FRAGMENT)
+                .setIcon(R.drawable.ic_genre);
+        tabLayout.getTabAt(TabType.LIBRARY_FRAGMENT)
+                .setIcon(R.drawable.ic_library);
+    }
+
 }

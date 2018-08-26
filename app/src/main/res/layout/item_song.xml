@@ -19,21 +19,28 @@
 
     <TextView
         android:id="@+id/text_song_name"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_16"
         android:text="@string/example_songname"
         android:textSize="@dimen/sp_20"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@+id/button_download"
         app:layout_constraintStart_toEndOf="@+id/image_song"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_artist"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="@dimen/dp_8"
         android:text="@string/example_artist"
+        app:layout_constraintEnd_toStartOf="@+id/button_download"
         app:layout_constraintStart_toEndOf="@+id/image_song"
         app:layout_constraintTop_toBottomOf="@+id/text_song_name" />
 
@@ -41,13 +48,13 @@
         android:id="@+id/text_like_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginStart="8dp"
         android:text="@string/example_like"
-        app:layout_constraintStart_toEndOf="@+id/image_song"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/text_artist" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/button_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_8"
@@ -58,17 +65,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_075"
-        android:layout_marginBottom="@dimen/dp_4"
-        android:layout_marginEnd="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_24"
-        android:background="@color/color_grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"></View>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ic_if_like_1214979"
+        app:layout_constraintStart_toEndOf="@+id/image_song"
+        app:layout_constraintTop_toBottomOf="@+id/text_artist" />
 
 </android.support.constraint.ConstraintLayout>

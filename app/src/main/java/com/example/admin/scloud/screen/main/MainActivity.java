@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public boolean onQueryTextSubmit(String s) {
         if (mSearchFragment == null) return false;
-
         mSearchFragment.submitQueryText(s);
         return true;
     }

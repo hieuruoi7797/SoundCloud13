@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment{
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(viewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        viewPagerAdapter.setupTabs(mTabLayout,mViewPager);
         mViewPager.setOffscreenPageLimit(SCREEN_LIMIT);
     }
 

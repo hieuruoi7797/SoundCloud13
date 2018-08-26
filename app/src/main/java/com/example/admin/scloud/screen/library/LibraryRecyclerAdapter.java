@@ -1,8 +1,9 @@
 package com.example.admin.scloud.screen.library;
 
-import android.net.Uri;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,23 @@ import android.widget.TextView;
 import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.data.model.Track;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryRecyclerAdapter extends
         RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<Track> mTracks;
+    private List<Track> mTracks;
+    private OnClickSongListener mListener;
+    private LayoutInflater mInflater;
+    private Context mContext;
 
-    public LibraryRecyclerAdapter(ArrayList<Track> tracks) {
+    public LibraryRecyclerAdapter(OnClickSongListener listener, Context context) {
+        mListener = listener;
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+    }
+
+    public void setTracks(List<Track> tracks) {
         mTracks = tracks;
     }
 
@@ -28,13 +38,14 @@ public class LibraryRecyclerAdapter extends
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.item_track_local, viewGroup, false);
-        return new ViewHolder(view);
+
+        return new ViewHolder(view, mListener, mTracks);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.bindData(mTracks.get(i));
-        viewHolder.onClickItem(mTracks.get(i));
+
     }
 
     @Override
@@ -46,28 +57,36 @@ public class LibraryRecyclerAdapter extends
 
         private TextView mTextSongName, mTextArtist;
         private ImageView mImageSong;
+        private OnClickSongListener mListener;
+        private Track mCurentTrack;
+        private List<Track> mTracks;
+        private Context mContext;
 
-        private ViewHolder(@NonNull View itemView) {
+
+        private ViewHolder(@NonNull final View itemView, OnClickSongListener listener, List<Track> tracks) {
             super(itemView);
 
-            mTextSongName = itemView.findViewById(R.id.text_local_song);
+            this.mListener = listener;
+            this.mTracks = tracks;
+            this.mContext = itemView.getContext();
+            mTextSongName = itemView.findViewById(R.id.text_song_name);
             mTextArtist = itemView.findViewById(R.id.text_local_artist);
             mImageSong = itemView.findViewById(R.id.image_local_song);
-        }
 
-        private void onClickItem(final Track track) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (mListener == null) return;
+                    mListener.onItemClickSong(mTracks, getLayoutPosition());
                 }
             });
+
         }
 
         private void bindData(Track track) {
+            Log.d("ABC", "bindData: " + track.getTitle());
             mTextSongName.setText(track.getTitle());
             mTextArtist.setText(track.getArtist().getName());
-            mImageSong.setImageURI(Uri.parse(track.getArtworkURL()));
         }
     }
 }

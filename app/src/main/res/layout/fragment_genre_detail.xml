@@ -5,42 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context="com.example.admin.scloud.screen.genre.GenreDetailFragment">
-
-    <ImageView
-        android:id="@+id/image_genre_detail"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_180"
-        android:contentDescription="TODO"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context="com.example.admin.scloud.screen.genre.genre_detail.GenreDetailFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_genres_detail"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_390"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/color_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_genre_detail"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_70"
-        android:layout_marginEnd="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_8"
-        android:background="@drawable/ic_play_arrow_24dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_genres_detail"
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        android:theme="@style/ProgressBarStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recycler_genres_detail"
-        app:layout_constraintVertical_bias="0.543" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,46 @@ public class Track implements Parcelable {
     private int mDuration;
     private boolean mIsDownloadable;
 
+    protected Track(Parcel in) {
+        mId = in.readInt();
+        mTitle = in.readString();
+        mArtworkURL = in.readString();
+        mDownloadURL = in.readString();
+        mLikeCount = in.readInt();
+        mSongURI = in.readString();
+        mDuration = in.readInt();
+        mIsDownloadable = in.readByte() != 0;
+    }
+
+    public static final Creator<Track> CREATOR = new Creator<Track>() {
+        @Override
+        public Track createFromParcel(Parcel in) {
+            return new Track(in);
+        }
+
+        @Override
+        public Track[] newArray(int size) {
+            return new Track[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mId);
+        parcel.writeString(mTitle);
+        parcel.writeString(mArtworkURL);
+        parcel.writeString(mDownloadURL);
+        parcel.writeInt(mLikeCount);
+        parcel.writeString(mSongURI);
+        parcel.writeInt(mDuration);
+        parcel.writeByte((byte) (mIsDownloadable ? 1 : 0));
+    }
+
     public static class Builder {
         private Track mTrack;
 
@@ -72,16 +112,6 @@ public class Track implements Parcelable {
         }
     }
 
-    protected Track(Parcel in) {
-        mId = in.readInt();
-        mTitle = in.readString();
-        mArtworkURL = in.readString();
-        mDownloadURL = in.readString();
-        mLikeCount = in.readInt();
-        mSongURI = in.readString();
-        mDuration = in.readInt();
-        mArtist.setName(in.readString());
-    }
 
     public Track(int id, Artist artist, String title,
                  String artworkURL, String songURI, int duration) {
@@ -105,34 +135,6 @@ public class Track implements Parcelable {
         mDuration = duration;
     }
 
-    public static final Creator<Track> CREATOR = new Creator<Track>() {
-        @Override
-        public Track createFromParcel(Parcel in) {
-            return new Track(in);
-        }
-
-        @Override
-        public Track[] newArray(int size) {
-            return new Track[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mId);
-        parcel.writeString(mTitle);
-        parcel.writeString(mArtworkURL);
-        parcel.writeString(mDownloadURL);
-        parcel.writeInt(mLikeCount);
-        parcel.writeString(mSongURI);
-        parcel.writeInt(mDuration);
-        parcel.writeString(mArtist.getName());
-    }
 
     public Track() {
         mArtworkURL = "";

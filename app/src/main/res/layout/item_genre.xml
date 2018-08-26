@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/image_genre"
@@ -25,6 +25,6 @@
         android:textColor="@color/color_white"
         android:textSize="@dimen/sp_30"
         android:paddingStart="@dimen/dp_4"
-        app:layout_constraintBottom_toBottomOf="@+id/image_genre"
+        app:layout_constraintBottom_toBottomOf="@id/image_genre"
         tools:text="@string/example" />
 </android.support.constraint.ConstraintLayout>

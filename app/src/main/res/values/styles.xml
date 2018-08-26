@@ -14,4 +14,12 @@
 
     </style>
 
+    <style name="ProgressBarStyle">
+        <item name="colorAccent">@color/color_material_purple_600</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>

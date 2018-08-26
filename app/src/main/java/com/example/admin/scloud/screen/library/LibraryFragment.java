@@ -1,13 +1,19 @@
 package com.example.admin.scloud.screen.library;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +22,12 @@ import android.widget.Toast;
 import com.example.admin.s_cloud.R;
 import com.example.admin.scloud.data.model.Track;
 import com.example.admin.scloud.data.repository.TrackRepository;
+import com.example.admin.scloud.service.MusicService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryFragment extends Fragment implements LibraryContract.View {
+public class LibraryFragment extends Fragment implements LibraryContract.View, OnClickSongListener {
 
     private static final int REQUEST_CODE = 1;
 
@@ -28,16 +35,35 @@ public class LibraryFragment extends Fragment implements LibraryContract.View {
     private LibraryContract.Presenter mPresenter;
     private LibraryRecyclerAdapter mLibraryRecyclerAdapter;
     private RecyclerView mRecyclerLocalTrack;
+    private MusicService mMusicService;
+    private boolean mIsBound = false;
+
+    public LibraryFragment() {
+
+    }
+
+    public static LibraryFragment newInstance() {
+        return new LibraryFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
+        //mPresenter = new LibraryPresenter(this);
         initRecycler(view);
         initPresenter();
         checkForPermission();
+        initBindService();
+
+        Log.d("playing", "onCreate2: " + mMusicService);
         return view;
+    }
+
+    private void initBindService() {
+        Intent bindIntent = new Intent(getContext(), MusicService.class);
+        getActivity().bindService(bindIntent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void checkForPermission() {
@@ -46,13 +72,16 @@ public class LibraryFragment extends Fragment implements LibraryContract.View {
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_CODE);
+        } else {
+            mPresenter.loadListSong();
         }
     }
 
     @Override
     public void showListTrack(List<Track> tracks) {
-        mLibraryRecyclerAdapter = new LibraryRecyclerAdapter((ArrayList<Track>) tracks);
-        mRecyclerLocalTrack.setAdapter(mLibraryRecyclerAdapter);
+        mLibraryRecyclerAdapter.setTracks(tracks);
+        mLibraryRecyclerAdapter.notifyDataSetChanged();
+        //mMusicService.setTracks(tracks);
     }
 
     @Override
@@ -88,7 +117,8 @@ public class LibraryFragment extends Fragment implements LibraryContract.View {
 
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerLocalTrack.setLayoutManager(layoutManager);
-        mLibraryRecyclerAdapter = new LibraryRecyclerAdapter(mTracks);
+        mLibraryRecyclerAdapter = new LibraryRecyclerAdapter(this, getContext());
+        //mLibraryRecyclerAdapter.setListener(this);
         mRecyclerLocalTrack.setAdapter(mLibraryRecyclerAdapter);
     }
 
@@ -97,4 +127,32 @@ public class LibraryFragment extends Fragment implements LibraryContract.View {
         mPresenter = new LibraryPresenter(trackRepository);
         mPresenter.setView(this);
     }
+
+    @Override
+    public void onItemClickSong(List<Track> tracks, int possition) {
+
+        Log.d("possition", "onItemClickSong: " + possition);
+        mMusicService.setPossition(possition);
+        mMusicService.setTracks(tracks, possition);
+        mMusicService.play();
+
+//        Intent intentPlaying = new Intent(getContext(), MainActivity.class);
+//        intentPlaying.putParcelableArrayListExtra()
+
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            mIsBound = true;
+            MusicService.MediaBinder mediaBinder = (MusicService.MediaBinder) iBinder;
+            mMusicService = mediaBinder.getMediaService();
+            Log.d("connect", "onServiceConnected: " );
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mIsBound = false;
+        }
+    };
 }
